@@ -19,8 +19,9 @@ export function ContactForm() {
   const [number, setNumber] = useState('');
 
   const handelInputChange = e => {
-    if (e.currentTarget.name === 'name') setName(e.currentTarget.value);
-    if (e.currentTarget.name === 'number') setNumber(e.currentTarget.value);
+    const { name, value } = e.currentTarget;
+    if (name === 'name') setName(value);
+    if (name === 'number') setNumber(value);
   };
 
   const contactList = useSelector(getContacts);

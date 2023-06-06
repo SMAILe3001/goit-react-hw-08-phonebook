@@ -10,14 +10,14 @@ import {
 } from 'redux-persist';
 
 import { filterSlice } from './filterSlice';
-import { themeSlice } from './themeSlice';
+import { persistedThemeReduser } from './themeSlice';
 import { persistedContactReduser } from './contactsSlice';
 
 export const store = configureStore({
   reducer: {
     contacts: persistedContactReduser,
     filter: filterSlice.reducer,
-    theme: themeSlice.reducer,
+    theme: persistedThemeReduser,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

@@ -2,9 +2,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Notify } from 'notiflix';
 
 import { getContacts, removeContact } from 'redux/contactsSlice';
+import { getFilter } from 'redux/filterSlice';
 
 import { List, Item, Button } from './ContactList.styled';
-import { getFilter } from 'redux/filterSlice';
 
 export function ContactList() {
   const contactList = useSelector(getContacts);
@@ -13,7 +13,10 @@ export function ContactList() {
 
   const deleteContact = (id, name) => {
     dispatch(removeContact(id));
+    alarmdeleteContact(name);
+  };
 
+  const alarmdeleteContact = name => {
     Notify.info(`Contact ${name} delit.`);
   };
 
@@ -26,15 +29,12 @@ export function ContactList() {
 
   return (
     <List>
-      {getVisibleContact().map(contact => (
-        <Item key={contact.id}>
+      {getVisibleContact().map(({ id, name, number }) => (
+        <Item key={id}>
           <span>
-            {contact.name}: {contact.number}
+            {name}: {number}
           </span>
-          <Button
-            type="button"
-            onClick={() => deleteContact(contact.id, contact.name)}
-          >
+          <Button type="button" onClick={() => deleteContact(id, name)}>
             delete
           </Button>
         </Item>
