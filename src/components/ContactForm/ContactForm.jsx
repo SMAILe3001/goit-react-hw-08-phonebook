@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { Notify } from 'notiflix';
 
-import { addContact } from 'redux/contactsSlice';
+import { addContact, getContacts } from 'redux/contactsSlice';
 
 import {
   Form,
@@ -23,7 +23,7 @@ export function ContactForm() {
     if (e.currentTarget.name === 'number') setNumber(e.currentTarget.value);
   };
 
-  const contactList = useSelector(state => state.contacts.contacts);
+  const contactList = useSelector(getContacts);
   const dispatch = useDispatch();
 
   const sabmitForm = e => {

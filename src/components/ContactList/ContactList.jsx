@@ -1,13 +1,14 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Notify } from 'notiflix';
 
-import { removeContact } from 'redux/contactsSlice';
+import { getContacts, removeContact } from 'redux/contactsSlice';
 
 import { List, Item, Button } from './ContactList.styled';
+import { getFilter } from 'redux/filterSlice';
 
 export function ContactList() {
-  const contactList = useSelector(state => state.contacts.contacts);
-  const filter = useSelector(state => state.filter.filter).trim();
+  const contactList = useSelector(getContacts);
+  const filter = useSelector(getFilter).trim();
   const dispatch = useDispatch();
 
   const deleteContact = (id, name) => {
