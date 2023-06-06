@@ -10,7 +10,7 @@ export function ContactList() {
   const filter = useSelector(state => state.filter.filter).trim();
   const dispatch = useDispatch();
 
-  const alarmDeleteContact = (id, name) => {
+  const deleteContact = (id, name) => {
     dispatch(removeContact(id));
 
     Notify.info(`Contact ${name} delit.`);
@@ -32,7 +32,7 @@ export function ContactList() {
           </span>
           <Button
             type="button"
-            onClick={() => alarmDeleteContact(contact.id, contact.name)}
+            onClick={() => deleteContact(contact.id, contact.name)}
           >
             delete
           </Button>

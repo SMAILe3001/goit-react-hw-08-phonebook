@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { Notify } from 'notiflix';
 
@@ -18,36 +18,50 @@ export function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
+  const handelInputChange = e => {
+    if (e.currentTarget.name === 'name') setName(e.currentTarget.value);
+    if (e.currentTarget.name === 'number') setNumber(e.currentTarget.value);
+  };
+
+  const contactList = useSelector(state => state.contacts.contacts);
   const dispatch = useDispatch();
 
-  const addContactPhonebook = e => {
+  const sabmitForm = e => {
     e.preventDefault();
 
-    dispatch(addContact({ name, number, id: nanoid() }));
-    alarmAddContact(name);
+    const normalizedFilter = name.toLowerCase();
+    const contactСheck = contactList.every(
+      contact => contact.name.toLowerCase() !== normalizedFilter
+    );
+
+    contactСheck ? addContactPhonebook() : alarmDuplicatioContact(name);
 
     setName('');
     setNumber('');
+  };
+
+  const addContactPhonebook = () => {
+    dispatch(addContact({ name, number, id: nanoid() }));
+    alarmAddContact(name);
   };
 
   const alarmAddContact = name => {
     Notify.success(`Contact ${name} add.`);
   };
 
-  const handelInputChange = e => {
-    if (e.currentTarget.name === 'name') setName(e.currentTarget.value);
-    if (e.currentTarget.name === 'number') setNumber(e.currentTarget.value);
+  const alarmDuplicatioContact = name => {
+    Notify.warning(`${name} is already in contacts.`);
   };
 
   return (
-    <Form onSubmit={addContactPhonebook}>
+    <Form onSubmit={sabmitForm}>
       <LabelContain>
         <Label>
           <LabelTitle>Name</LabelTitle>
           <Input
             type="text"
             name="name"
-            // pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
             value={name}
@@ -59,7 +73,7 @@ export function ContactForm() {
           <Input
             type="tel"
             name="number"
-            // pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
             value={number}
