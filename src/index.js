@@ -9,7 +9,7 @@ import { store, persistor } from 'redux/store';
 
 import { theme } from 'theme';
 import './index.css';
-import { LIGHT, DARK } from 'constants/theme';
+import { DARK } from 'constants/theme';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
