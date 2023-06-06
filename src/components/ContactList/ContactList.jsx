@@ -1,7 +1,20 @@
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { Notify } from 'notiflix';
+
+import { removeContact } from 'redux/contactsSlice';
+
 import { List, Item, Button } from './ContactList.styled';
 
-export function ContactList({ contactList, onDeleted }) {
+export function ContactList() {
+  const contactList = useSelector(state => state.contacts.contacts);
+  const dispatch = useDispatch();
+
+  const alarmDeleteContact = (id, name) => {
+    dispatch(removeContact(id));
+
+    Notify.info(`Contact ${name} delit.`);
+  };
+
   return (
     <List>
       {contactList.map(contact => (
@@ -9,7 +22,10 @@ export function ContactList({ contactList, onDeleted }) {
           <span>
             {contact.name}: {contact.number}
           </span>
-          <Button type="button" onClick={() => onDeleted(contact.id)}>
+          <Button
+            type="button"
+            onClick={() => alarmDeleteContact(contact.id, contact.name)}
+          >
             delete
           </Button>
         </Item>
@@ -17,8 +33,3 @@ export function ContactList({ contactList, onDeleted }) {
     </List>
   );
 }
-
-ContactList.propType = {
-  contactList: PropTypes.array.isRequired,
-  onDeleted: PropTypes.func.isRequired,
-};
