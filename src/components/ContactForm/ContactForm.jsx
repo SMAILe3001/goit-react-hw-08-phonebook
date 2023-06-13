@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { nanoid } from 'nanoid';
+import { nanoid } from '@reduxjs/toolkit';
 import { Notify } from 'notiflix';
 
 import { addContact, getContacts } from 'redux/contactsSlice';
