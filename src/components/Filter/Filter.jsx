@@ -16,7 +16,6 @@ export function Filter() {
           name="filter"
           required
           onChange={e => dispatch(filterContact(e.currentTarget.value))}
-          // value={value}
         />
       </label>
     </div>
