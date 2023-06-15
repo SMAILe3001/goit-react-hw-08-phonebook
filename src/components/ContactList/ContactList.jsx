@@ -5,11 +5,20 @@ import { getContacts, removeContact } from 'redux/contactsSlice';
 import { getFilter } from 'redux/filterSlice';
 
 import { List, Item, Button } from './ContactList.styled';
+// import { useEffect } from 'react';
+// import { getContactsServer } from 'components/api/servise';
 
 export function ContactList() {
+  const { contacts, isLoading, error } = useSelector(state => state.contacts);
   const contactList = useSelector(getContacts);
   const filter = useSelector(getFilter).trim();
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  // dispatch(getContactsServer());
+  //   getContactsServer();
+  //   console.log(getContactsServer());
+  // }, [dispatch]);
 
   const deleteContact = (id, name) => {
     dispatch(removeContact(id));
@@ -26,6 +35,10 @@ export function ContactList() {
       contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
+
+  console.log(contacts);
+  console.log(isLoading);
+  console.log(error);
 
   return (
     <List>
