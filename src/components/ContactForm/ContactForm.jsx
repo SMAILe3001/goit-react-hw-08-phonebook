@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { Notify } from 'notiflix';
 
-import { addContact, getContacts } from 'redux/contacts/contactsSlice';
+import { addContact } from 'redux/contacts/contactsSlice';
 
 import {
   Form,
@@ -13,18 +13,19 @@ import {
   LabelTitle,
   Input,
 } from './ContactForm.styled';
+import { useGetContactsQuery } from 'redux/contactsApi';
 
 export function ContactForm() {
+  const { data: contactList = [] } = useGetContactsQuery();
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
   const handelInputChange = e => {
     const { name, value } = e.currentTarget;
     if (name === 'name') setName(value);
-    if (name === 'number') setNumber(value);
+    if (name === 'phone') setPhone(value);
   };
 
-  const contactList = useSelector(getContacts);
   const dispatch = useDispatch();
 
   const sabmitForm = e => {
@@ -38,11 +39,11 @@ export function ContactForm() {
     contactСheck ? addContactPhonebook() : alarmDuplicatioContact(name);
 
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   const addContactPhonebook = () => {
-    dispatch(addContact({ name, number, id: nanoid() }));
+    dispatch(addContact({ name, phone, id: nanoid() }));
     alarmAddContact(name);
   };
 
@@ -73,11 +74,11 @@ export function ContactForm() {
           <LabelTitle>Phonebook</LabelTitle>
           <Input
             type="tel"
-            name="number"
+            name="phone"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
-            value={number}
+            value={phone}
             onChange={handelInputChange}
           />
         </Label>
