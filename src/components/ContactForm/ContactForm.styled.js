@@ -21,6 +21,7 @@ export const Button = styled.button`
   font-size: 20px;
   border: none;
   border-radius: 15px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
   &:hover {
     background-color: ${props => props.theme.colors.success};
   }
