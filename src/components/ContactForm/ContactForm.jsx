@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import { Notify } from 'notiflix';
 
-import { addContact, getContacts } from 'redux/contactsSlice';
+import { addContact, getContacts } from 'redux/contacts/contactsSlice';
 
 import {
   Form,

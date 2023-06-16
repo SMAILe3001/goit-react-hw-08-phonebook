@@ -1,6 +1,6 @@
 import { filterSlice } from './filterSlice';
 import { themeSlice } from './themeSlice';
-import { contactsSlice } from './contactsSlice';
+import { contactsSlice } from './contacts/contactsSlice';
 
 export const reducer = {
   contacts: contactsSlice.reducer,

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { InfinitySpin } from 'react-loader-spinner';
 import { Notify } from 'notiflix';
 
-import { getContactsThunk, removeContact } from 'redux/contactsSlice';
+import { getContactsThunk, removeContact } from 'redux/contacts';
 import { getFilter } from 'redux/filterSlice';
 
 import { List, Item, Button } from './ContactList.styled';
