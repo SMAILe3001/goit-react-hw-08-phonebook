@@ -7,9 +7,10 @@ import { getContactsThunk, removeContact } from 'redux/contacts';
 import { getFilter } from 'redux/filterSlice';
 
 import { List, Item, Button } from './ContactList.styled';
+import { selectContacts } from './selectors';
 
 export function ContactList() {
-  const { contacts, isLoading, error } = useSelector(state => state.contacts);
+  const { contacts, isLoading, error } = useSelector(selectContacts);
   const filter = useSelector(getFilter).trim();
   const dispatch = useDispatch();
 

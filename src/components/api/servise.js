@@ -6,3 +6,8 @@ export const getContactsServer = async () => {
   const { data } = await axios(BASE_URL);
   return data;
 };
+
+export const deleteContactsServer = async () => {
+  const { data } = await axios(BASE_URL);
+  return data;
+};
