@@ -36,7 +36,7 @@ export function ContactList() {
   return (
     <>
       {error !== '' && <p>{error}</p>}
-      {isLoading && <InfinitySpin width="200" color="#4fa94d" />}
+      {isLoading && <InfinitySpin width="500" color="#4fa94d" />}
       <List>
         {getVisibleContact().map(({ id, name, number }) => (
           <Item key={id}>

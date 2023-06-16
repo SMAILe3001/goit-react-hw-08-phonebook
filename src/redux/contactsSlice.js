@@ -1,17 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getContactsServer } from 'components/api/servise';
 
-export const getContactsThunk = () => {
-  return async dispatch => {
-    dispatch(contactsSlice.actions.fetching());
-    try {
-      const data = await getContactsServer();
-      dispatch(contactsSlice.actions.fetchSuccess(data));
-    } catch (error) {
-      dispatch(contactsSlice.actions.fetchError(error));
-    }
-  };
-};
+export const getContactsThunk = createAsyncThunk(
+  'contacts/getAllContacts',
+  () => getContactsServer()
+);
 
 const initialState = {
   contacts: [],
@@ -22,6 +15,20 @@ const initialState = {
 export const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
+  extraReducers: {
+    [getContactsThunk.pending]: state => {
+      state.isLoading = true;
+    },
+    [getContactsThunk.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.contacts = payload;
+      state.error = '';
+    },
+    [getContactsThunk.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    },
+  },
   reducers: {
     addContact(state, action) {
       state.contacts = [...state.contacts, action.payload];
@@ -30,18 +37,6 @@ export const contactsSlice = createSlice({
       state.contacts = state.contacts.filter(
         contact => contact.id !== action.payload
       );
-    },
-    fetching: state => {
-      state.isLoading = true;
-    },
-    fetchSuccess: (state, { payload }) => {
-      state.isLoading = false;
-      state.contacts = payload;
-      state.error = '';
-    },
-    fetchError: (state, { payload }) => {
-      state.isLoading = false;
-      state.error = payload;
     },
   },
 });
