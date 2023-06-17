@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { nanoid } from '@reduxjs/toolkit';
 import { Notify } from 'notiflix';
 
-import { addContact } from 'redux/contacts/contactsSlice';
+import {
+  useGetContactsQuery,
+  usePostContactsMutation,
+} from 'redux/contactsApi';
 
 import {
   Form,
@@ -13,9 +14,9 @@ import {
   LabelTitle,
   Input,
 } from './ContactForm.styled';
-import { useGetContactsQuery } from 'redux/contactsApi';
 
 export function ContactForm() {
+  const [create] = usePostContactsMutation();
   const { data: contactList = [] } = useGetContactsQuery();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -25,8 +26,6 @@ export function ContactForm() {
     if (name === 'name') setName(value);
     if (name === 'phone') setPhone(value);
   };
-
-  const dispatch = useDispatch();
 
   const sabmitForm = e => {
     e.preventDefault();
@@ -42,8 +41,8 @@ export function ContactForm() {
     setPhone('');
   };
 
-  const addContactPhonebook = () => {
-    dispatch(addContact({ name, phone, id: nanoid() }));
+  const addContactPhonebook = async () => {
+    await create({ name, phone });
     alarmAddContact(name);
   };
 
