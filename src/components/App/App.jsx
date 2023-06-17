@@ -1,33 +1,24 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { lazy } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
+import { useSelector } from 'react-redux';
 
-import { ContactForm } from '../ContactForm';
-import { Filter } from '../Filter';
-import { ContactList } from '../ContactList';
-import { Button } from 'components/Button';
-import { getTheme, themeTogle } from 'redux/themeSlice';
+import { getTheme } from 'redux/themeSlice';
 import { theme } from 'theme';
+import Leyout from './../../Layout/Layout';
 
-import { Container } from './App.styled';
+const Home = lazy(() => import('../pages/Home'));
 
 export const App = () => {
-  const dispatch = useDispatch();
   const activeTheme = useSelector(getTheme);
-  
   return (
     <ThemeProvider theme={theme[activeTheme]}>
-      <Container>
-        <div>
-          <Button onClick={() => dispatch(themeTogle())} text={'togle theme'} />
-        </div>
-        <div>
-          <h1>Phonebook</h1>
-          <ContactForm />
-          <h2>Contacts</h2>
-          <Filter />
-          <ContactList />
-        </div>
-      </Container>
+      <Routes>
+        <Route path="/" element={<Leyout />}>
+          <Route index element={<Home />} />
+          <Route path="*" element={<h1>Page not found</h1>} />
+        </Route>
+      </Routes>
     </ThemeProvider>
   );
 };
