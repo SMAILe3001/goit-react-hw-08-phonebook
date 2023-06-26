@@ -1,27 +1,24 @@
 import { Container } from 'components/Container';
 import { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
+import { Nav, Title } from './Layout.staled';
+import UserMenu from 'components/UserMenu/UserMenu';
 
 const Leyout = () => {
   return (
     <>
       <header>
         <Container>
-          <h1>Phonebook</h1>
-        </Container>
-        <nav>
-          <Container>
+          <Nav>
             <NavLink to="/">
-              <h2>Contacts</h2>
+              <Title>Phonebook</Title>
             </NavLink>
-            <NavLink to="/register">
-              <h2>SingUp</h2>
+            <NavLink to="/contacts">
+              <Title>Contacts</Title>
             </NavLink>
-            <NavLink to="/login">
-              <h2>LogIn</h2>
-            </NavLink>
-          </Container>
-        </nav>
+            <UserMenu />
+          </Nav>
+        </Container>
       </header>
       <main>
         <Suspense fallback={<div>Loading...</div>}>
