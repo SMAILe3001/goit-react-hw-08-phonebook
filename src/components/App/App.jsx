@@ -8,6 +8,8 @@ import { theme } from 'theme';
 import Leyout from './../../Layout/Layout';
 
 const Home = lazy(() => import('../pages/Home'));
+const SingUpPage = lazy(() => import('../pages/SingUpPage'));
+const LogIn = lazy(() => import('../pages/LogInPage'));
 
 export const App = () => {
   const activeTheme = useSelector(getTheme);
@@ -16,6 +18,8 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<Leyout />}>
           <Route index element={<Home />} />
+          <Route path="register" element={<SingUpPage />} />
+          <Route path="login" element={<LogIn />} />
           <Route path="*" element={<h1>Page not found</h1>} />
         </Route>
       </Routes>

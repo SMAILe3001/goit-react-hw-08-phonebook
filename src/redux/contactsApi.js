@@ -32,8 +32,37 @@ export const contactsApi = createApi({
   }),
 });
 
+export const registerApi = createApi({
+  reducerPath: 'user',
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://connections-api.herokuapp.com',
+  }),
+  tagTypes: ['user'],
+  endpoints: builder => ({
+    postRegisterUser: builder.mutation({
+      query: data => ({
+        url: '/users/signup',
+        method: 'POST',
+        body: data,
+      }),
+      providesTags: ['user'],
+    }),
+    postLoginUser: builder.mutation({
+      query: data => ({
+        url: '/users/login',
+        method: 'POST',
+        body: data,
+      }),
+      providesTags: ['user'],
+    }),
+  }),
+});
+
 export const {
   useGetContactsQuery,
   useDeleteContactsMutation,
   usePostContactsMutation,
 } = contactsApi;
+
+export const { usePostRegisterUserMutation, usePostLoginUserMutation } =
+  registerApi;
