@@ -1,25 +1,16 @@
-import { Button } from 'components/Button';
-import { ContactForm } from 'components/ContactForm';
-import { ContactList } from 'components/ContactList';
 import { Container } from 'components/Container';
-import { Filter } from 'components/Filter';
-import { useDispatch } from 'react-redux';
-import { themeTogle } from 'redux/themeSlice';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
-  const dispatch = useDispatch();
-
+  const { user } = useSelector(state => state.auth);
   return (
     <Container>
-      <div>
-        <Button onClick={() => dispatch(themeTogle())} text={'togle theme'} />
-      </div>
-      <div>
-        <ContactForm />
-        <h2>Contacts</h2>
-        <Filter />
-        <ContactList />
-      </div>
+      <h2>Welcome to the phone book application</h2>
+      {user?.name ? (
+        <p>Helow {user.name}, now you can go to contacts</p>
+      ) : (
+        <p>to continue, register or login</p>
+      )}
     </Container>
   );
 };

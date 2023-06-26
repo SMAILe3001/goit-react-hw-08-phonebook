@@ -7,30 +7,35 @@ import {
 } from 'components/ContactForm/ContactForm.styled';
 import { Button } from 'components/ContactListItem/ContactListItem.styled';
 import { Container } from 'components/Container';
-import { usePostRegisterUserMutation } from 'redux/contactsApi';
+import Notiflix from 'notiflix';
+import { useDispatch } from 'react-redux';
+import { register } from 'redux/auth/operations';
 
 const SingUpPage = () => {
-  const [create] = usePostRegisterUserMutation();
+  const dispatch = useDispatch();
 
-  const sabmitForm = e => {
+  const handleSubmit = e => {
     e.preventDefault();
 
-    const form = e.currentTarget.elements;
-    const formData = {
-      name: form.name.value,
-      email: form.email.value,
-      password: form.password.value,
-    };
-    registerUser(formData);
-  };
+    const data = new FormData(e.currentTarget);
 
-  const registerUser = async data => {
-    await create({ ...data });
+    const newUser = {
+      name: data.get('name'),
+      email: data.get('email'),
+      password: data.get('password'),
+    };
+
+    dispatch(register(newUser))
+      .then(() => {
+        Notiflix.Notify.success(`the user ${newUser.name} has been created`);
+        dispatch(register(newUser));
+      })
+      .catch(error => Notiflix.Notify.warning(error.message));
   };
 
   return (
     <Container>
-      <Form onSubmit={sabmitForm}>
+      <Form onSubmit={handleSubmit}>
         <LabelContain>
           <Label>
             <LabelTitle>Name</LabelTitle>

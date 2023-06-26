@@ -3,8 +3,12 @@ import { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { Nav, Title } from './Layout.staled';
 import UserMenu from 'components/UserMenu/UserMenu';
+import { useSelector } from 'react-redux';
+import { UserInfo } from 'components/UserInfo/UserInfo';
 
 const Leyout = () => {
+  const { user } = useSelector(state => state.auth);
+
   return (
     <>
       <header>
@@ -16,8 +20,9 @@ const Leyout = () => {
             <NavLink to="/contacts">
               <Title>Contacts</Title>
             </NavLink>
-            <UserMenu />
           </Nav>
+
+          {user?.name ? <UserInfo /> : <UserMenu />}
         </Container>
       </header>
       <main>

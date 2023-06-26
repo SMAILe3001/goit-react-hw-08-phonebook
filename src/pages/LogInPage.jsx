@@ -7,31 +7,34 @@ import {
 } from 'components/ContactForm/ContactForm.styled';
 import { Button } from 'components/ContactListItem/ContactListItem.styled';
 import { Container } from 'components/Container';
-import { usePostLoginUserMutation } from 'redux/contactsApi';
+import Notiflix from 'notiflix';
+import { useDispatch } from 'react-redux';
+import { logIn } from 'redux/auth/operations';
 
 const LogIn = () => {
-  const [create] = usePostLoginUserMutation();
+  const dispatch = useDispatch();
 
-  const sabmitForm = e => {
-    e.preventDefault();
-
-    const form = e.currentTarget.elements;
-    const formData = {
-      email: form.email.value,
-      password: form.password.value,
-    };
-    registerUser(formData);
-  };
-
-  const registerUser = async data => {
-    await create({ ...data }).then(({ data }) => {
-      console.log(data);
-    });
+  const handleSubmit = event => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    dispatch(
+      logIn({
+        email: data.get('email'),
+        password: data.get('password'),
+      })
+    )
+      .unwrap()
+      .then(res => {
+        Notiflix.Notify.success(`Hello, ${res.user.name}`);
+      })
+      .catch(error => {
+        Notiflix.Notify.warning(error.message);
+      });
   };
 
   return (
     <Container>
-      <Form onSubmit={sabmitForm}>
+      <Form onSubmit={handleSubmit}>
         <LabelContain>
           <Label>
             <LabelTitle>Email</LabelTitle>
