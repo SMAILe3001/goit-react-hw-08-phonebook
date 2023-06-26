@@ -1,10 +1,12 @@
-import { Container } from 'components/Container';
 import { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { Nav, Title } from './Layout.staled';
-import UserMenu from 'components/UserMenu/UserMenu';
 import { useSelector } from 'react-redux';
+
+import { Container } from 'components/Container';
+import UserMenu from 'components/UserMenu/UserMenu';
 import { UserInfo } from 'components/UserInfo/UserInfo';
+
+import { Nav, Title } from './Layout.staled';
 
 const Leyout = () => {
   const { user } = useSelector(state => state.auth);

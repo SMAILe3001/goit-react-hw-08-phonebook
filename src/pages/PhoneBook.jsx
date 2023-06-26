@@ -1,9 +1,10 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
 import { ContactForm } from 'components/ContactForm';
 import { ContactList } from 'components/ContactList';
 import { Container } from 'components/Container';
 import { Filter } from 'components/Filter';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { fetchAllContacts } from 'redux/contacts/operations';
 
 const PhoneBook = () => {
@@ -12,6 +13,7 @@ const PhoneBook = () => {
   useEffect(() => {
     dispatch(fetchAllContacts());
   }, [dispatch]);
+
   return (
     <Container>
       <div>

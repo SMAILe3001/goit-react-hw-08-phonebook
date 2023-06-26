@@ -1,3 +1,9 @@
+import { useDispatch } from 'react-redux';
+import Notiflix from 'notiflix';
+import { logIn } from 'redux/auth/operations';
+
+import { Container } from 'components/Container';
+
 import {
   Form,
   LabelContain,
@@ -6,17 +12,14 @@ import {
   Input,
 } from 'components/ContactForm/ContactForm.styled';
 import { Button } from 'components/ContactListItem/ContactListItem.styled';
-import { Container } from 'components/Container';
-import Notiflix from 'notiflix';
-import { useDispatch } from 'react-redux';
-import { logIn } from 'redux/auth/operations';
 
 const LogIn = () => {
   const dispatch = useDispatch();
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    const data = new FormData(e.currentTarget);
     dispatch(
       logIn({
         email: data.get('email'),

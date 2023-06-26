@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
 import { fetchAllContacts, addContact, deleteContact } from './operations';
 
 const pendingStatus = state => {

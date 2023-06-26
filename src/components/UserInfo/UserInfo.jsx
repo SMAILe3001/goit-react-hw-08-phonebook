@@ -1,7 +1,8 @@
-import { Button } from 'components/ContactListItem/ContactListItem.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logOut } from 'redux/auth/operations';
+
+import { Button } from 'components/ContactListItem/ContactListItem.styled';
 import { Div } from './UserInfo.staled';
 
 export const UserInfo = () => {

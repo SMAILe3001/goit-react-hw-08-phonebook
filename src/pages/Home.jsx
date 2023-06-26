@@ -1,5 +1,6 @@
-import { Container } from 'components/Container';
 import { useSelector } from 'react-redux';
+
+import { Container } from 'components/Container';
 
 const Home = () => {
   const { user } = useSelector(state => state.auth);

@@ -1,3 +1,9 @@
+import { useDispatch } from 'react-redux';
+import Notiflix from 'notiflix';
+
+import { register } from 'redux/auth/operations';
+import { Container } from 'components/Container';
+
 import {
   Form,
   LabelContain,
@@ -6,10 +12,6 @@ import {
   Input,
 } from 'components/ContactForm/ContactForm.styled';
 import { Button } from 'components/ContactListItem/ContactListItem.styled';
-import { Container } from 'components/Container';
-import Notiflix from 'notiflix';
-import { useDispatch } from 'react-redux';
-import { register } from 'redux/auth/operations';
 
 const SingUpPage = () => {
   const dispatch = useDispatch();
