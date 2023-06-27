@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { Notify } from 'notiflix';
 
-import { addContact } from '../../redux/contacts/operations';
+import {
+  useGetContactsQuery,
+  usePostContactsMutation,
+} from 'redux/contactsApi';
 
 import {
   Form,
@@ -13,26 +16,46 @@ import {
 } from './ContactForm.styled';
 
 export function ContactForm() {
-  const dispatch = useDispatch();
-  const [state, setState] = useState({
-    name: '',
-    number: '',
-  });
+  const [create] = usePostContactsMutation();
+  const { data: contactList = [] } = useGetContactsQuery();
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
 
-  function handleInputChange(event) {
-    const { name, value } = event.currentTarget;
-    setState(state => ({ ...state, [name]: value }));
-  }
+  const handelInputChange = e => {
+    const { name, value } = e.currentTarget;
+    if (name === 'name') setName(value);
+    if (name === 'number') setNumber(value);
+  };
 
-  function handleSubmit(e) {
+  const sabmitForm = e => {
     e.preventDefault();
 
-    dispatch(addContact(state));
-    setState({ name: '', number: '' });
-  }
+    const normalizedFilter = name.toLowerCase();
+    const contactСheck = contactList.every(
+      contact => contact.name.toLowerCase() !== normalizedFilter
+    );
+
+    contactСheck ? addContactPhonebook() : alarmDuplicatioContact(name);
+
+    setName('');
+    setNumber('');
+  };
+
+  const addContactPhonebook = async () => {
+    await create({ name, number });
+    alarmAddContact(name);
+  };
+
+  const alarmAddContact = name => {
+    Notify.success(`Contact ${name} add.`);
+  };
+
+  const alarmDuplicatioContact = name => {
+    Notify.warning(`${name} is already in contacts.`);
+  };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={sabmitForm}>
       <LabelContain>
         <Label>
           <LabelTitle>Name</LabelTitle>
@@ -42,8 +65,8 @@ export function ContactForm() {
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
-            value={state.name}
-            onChange={handleInputChange}
+            value={name}
+            onChange={handelInputChange}
           />
         </Label>
         <Label>
@@ -54,8 +77,8 @@ export function ContactForm() {
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
-            value={state.number}
-            onChange={handleInputChange}
+            value={number}
+            onChange={handelInputChange}
           />
         </Label>
       </LabelContain>

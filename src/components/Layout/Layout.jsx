@@ -1,15 +1,16 @@
 import { Suspense } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { NavLink, Outlet } from 'react-router-dom';
+
+import UserMenu from 'components/UserMenu/UserMenu';
+import { tokenUser } from 'redux/tokenSlice';
+import UserInfo from 'components/UserInfo/UserInfo';
 
 import { Container } from 'components/Container';
-import UserMenu from 'components/UserMenu/UserMenu';
-import { UserInfo } from 'components/UserInfo/UserInfo';
-
 import { Nav, Title } from './Layout.staled';
 
 const Leyout = () => {
-  const { user } = useSelector(state => state.auth);
+  const authUser = useSelector(tokenUser);
 
   return (
     <>
@@ -17,14 +18,13 @@ const Leyout = () => {
         <Container>
           <Nav>
             <NavLink to="/">
-              <Title>Phonebook</Title>
+              <Title>Home</Title>
             </NavLink>
             <NavLink to="/contacts">
               <Title>Contacts</Title>
             </NavLink>
+            {authUser ? <UserInfo /> : <UserMenu />}
           </Nav>
-
-          {user?.name ? <UserInfo /> : <UserMenu />}
         </Container>
       </header>
       <main>

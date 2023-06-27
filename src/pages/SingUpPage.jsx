@@ -1,9 +1,3 @@
-import { useDispatch } from 'react-redux';
-import Notiflix from 'notiflix';
-
-import { register } from 'redux/auth/operations';
-import { Container } from 'components/Container';
-
 import {
   Form,
   LabelContain,
@@ -12,32 +6,35 @@ import {
   Input,
 } from 'components/ContactForm/ContactForm.styled';
 import { Button } from 'components/ContactListItem/ContactListItem.styled';
+import { Container } from 'components/Container';
+import { useDispatch } from 'react-redux';
+import { usePostRegisterUserMutation } from 'redux/contactsApi';
+import { newTokenUser } from 'redux/tokenSlice';
 
 const SingUpPage = () => {
   const dispatch = useDispatch();
+  const [create] = usePostRegisterUserMutation();
 
-  const handleSubmit = e => {
+  const sabmitForm = e => {
     e.preventDefault();
 
-    const data = new FormData(e.currentTarget);
-
-    const newUser = {
-      name: data.get('name'),
-      email: data.get('email'),
-      password: data.get('password'),
+    const form = e.currentTarget.elements;
+    const formData = {
+      name: form.name.value,
+      email: form.email.value,
+      password: form.password.value,
     };
+    registerUser(formData);
+  };
 
-    dispatch(register(newUser))
-      .then(() => {
-        Notiflix.Notify.success(`the user ${newUser.name} has been created`);
-        dispatch(register(newUser));
-      })
-      .catch(error => Notiflix.Notify.warning(error.message));
+  const registerUser = async formData => {
+    const { data } = await create(formData);
+    dispatch(newTokenUser(data.token));
   };
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={sabmitForm}>
         <LabelContain>
           <Label>
             <LabelTitle>Name</LabelTitle>

@@ -1,21 +1,19 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-
+import { Button } from 'components/Button';
 import { ContactForm } from 'components/ContactForm';
 import { ContactList } from 'components/ContactList';
 import { Container } from 'components/Container';
 import { Filter } from 'components/Filter';
-import { fetchAllContacts } from 'redux/contacts/operations';
+import { useDispatch } from 'react-redux';
+import { themeTogle } from 'redux/themeSlice';
 
-const PhoneBook = () => {
+const ContactsPage = () => {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchAllContacts());
-  }, [dispatch]);
 
   return (
     <Container>
+      <div>
+        <Button onClick={() => dispatch(themeTogle())} text={'togle theme'} />
+      </div>
       <div>
         <ContactForm />
         <h2>Contacts</h2>
@@ -26,4 +24,4 @@ const PhoneBook = () => {
   );
 };
 
-export default PhoneBook;
+export default ContactsPage;

@@ -1,8 +1,7 @@
 import { useDispatch } from 'react-redux';
-import Notiflix from 'notiflix';
-import { logIn } from 'redux/auth/operations';
 
-import { Container } from 'components/Container';
+import { usePostLoginUserMutation } from 'redux/contactsApi';
+import { newTokenUser } from 'redux/tokenSlice';
 
 import {
   Form,
@@ -12,32 +11,32 @@ import {
   Input,
 } from 'components/ContactForm/ContactForm.styled';
 import { Button } from 'components/ContactListItem/ContactListItem.styled';
+import { Container } from 'components/Container';
 
-const LogIn = () => {
+const LogInPage = () => {
   const dispatch = useDispatch();
+  const [create] = usePostLoginUserMutation();
 
-  const handleSubmit = e => {
+  const sabmitForm = e => {
     e.preventDefault();
 
-    const data = new FormData(e.currentTarget);
-    dispatch(
-      logIn({
-        email: data.get('email'),
-        password: data.get('password'),
-      })
-    )
-      .unwrap()
-      .then(res => {
-        Notiflix.Notify.success(`Hello, ${res.user.name}`);
-      })
-      .catch(error => {
-        Notiflix.Notify.warning(error.message);
-      });
+    const form = e.currentTarget.elements;
+    const formData = {
+      email: form.email.value,
+      password: form.password.value,
+    };
+
+    logInUser(formData);
+  };
+
+  const logInUser = async formData => {
+    const { data } = await create(formData);
+    dispatch(newTokenUser(data.token));
   };
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={sabmitForm}>
         <LabelContain>
           <Label>
             <LabelTitle>Email</LabelTitle>
@@ -54,4 +53,4 @@ const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default LogInPage;

@@ -16,11 +16,8 @@ code {
 
 .active {
   color: black;
-  border-radius: 7px;
-  border: 2px solid #849ce7;
 }
 
 a {
-  padding: 4px;
   text-decoration: none;
 }

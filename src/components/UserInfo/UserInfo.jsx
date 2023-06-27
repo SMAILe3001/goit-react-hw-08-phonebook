@@ -1,25 +1,28 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { logOut } from 'redux/auth/operations';
-
 import { Button } from 'components/ContactListItem/ContactListItem.styled';
-import { Div } from './UserInfo.staled';
+import { Title } from 'components/Layout/Layout.staled';
+import { useDispatch } from 'react-redux';
+import { useGetAuthUserQuery, usePostLogOutMutation } from 'redux/contactsApi';
+import { newTokenUser } from 'redux/tokenSlice';
 
-export const UserInfo = () => {
+const UserInfo = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector(state => state.auth);
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    dispatch(logOut());
-    navigate('/');
+  const [logUotUser] = usePostLogOutMutation();
+
+  const { data } = useGetAuthUserQuery();
+
+  const handelClick = () => {
+    logUotUser();
+    dispatch(newTokenUser(''));
   };
 
   return (
-    <Div>
-      <h3>Helow "{user.name}"</h3>
-      <Button type="button" onClick={handleLogout}>
+    <>
+      <Title>{data?.name}</Title>
+      <Button type="button" onClick={() => handelClick()}>
         Log Out
       </Button>
-    </Div>
+    </>
   );
 };
+
+export default UserInfo;

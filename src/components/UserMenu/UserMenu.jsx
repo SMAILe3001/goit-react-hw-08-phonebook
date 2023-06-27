@@ -1,6 +1,5 @@
-import { NavLink } from 'react-router-dom';
-
 import { Title } from 'components/Layout/Layout.staled';
+import { NavLink } from 'react-router-dom';
 
 const UserMenu = () => {
   return (
