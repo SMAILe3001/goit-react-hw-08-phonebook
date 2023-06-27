@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import { getTheme } from 'redux/themeSlice';
 import { theme } from 'theme';
 import Leyout from '../Layout/Layout';
+import PrivateRoute from 'privateRoute/PrivateRoute';
+import RestrictedRoute from 'restrictedRoute/RestrictedRoute';
 
 const HomePage = lazy(() => import('../../pages/HomePage'));
 const ContactsPage = lazy(() => import('../../pages/ContactsPage'));
@@ -21,10 +23,30 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<Leyout />}>
           <Route index element={<HomePage />} />
-          <Route path="/contacts" element={<ContactsPage />} />
-          <Route path="/register" element={<SingUpPage />} />
-          <Route path="/login" element={<LogInPage />} />
-          <Route path="/contacts" element={<HomePage />} />
+          <Route
+            path="/contacts"
+            element={
+              <PrivateRoute component={<ContactsPage />} redirectTo="/login" />
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <RestrictedRoute
+                component={<SingUpPage />}
+                redirectTo="/contacts"
+              />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <RestrictedRoute
+                component={<LogInPage />}
+                redirectTo="/contacts"
+              />
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

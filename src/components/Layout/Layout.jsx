@@ -8,6 +8,7 @@ import UserInfo from 'components/UserInfo/UserInfo';
 
 import { Container } from 'components/Container';
 import { Nav, Title } from './Layout.staled';
+import { InfinitySpin } from 'react-loader-spinner';
 
 const Leyout = () => {
   const authUser = useSelector(tokenUser);
@@ -28,7 +29,13 @@ const Leyout = () => {
         </Container>
       </header>
       <main>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense
+          fallback={
+            <Container>
+              <InfinitySpin width="1000" color="#4fa94d" />
+            </Container>
+          }
+        >
           <Outlet />
         </Suspense>
       </main>
