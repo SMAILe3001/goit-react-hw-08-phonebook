@@ -1,8 +1,10 @@
-import { Button } from 'components/ContactListItem/ContactListItem.styled';
-import { Title } from 'components/Layout/Layout.staled';
 import { useDispatch } from 'react-redux';
-import { useGetAuthUserQuery, usePostLogOutMutation } from 'redux/contactsApi';
+
 import { newTokenUser } from 'redux/tokenSlice';
+import { useGetAuthUserQuery, usePostLogOutMutation } from 'redux/authApi';
+
+import { Title } from 'components/Layout/Layout.staled';
+import { Button } from 'components/ContactListItem/ContactListItem.styled';
 
 const UserInfo = () => {
   const dispatch = useDispatch();

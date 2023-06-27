@@ -1,3 +1,8 @@
+import { useDispatch } from 'react-redux';
+
+import { usePostRegisterUserMutation } from 'redux/authApi';
+import { newTokenUser } from 'redux/tokenSlice';
+
 import {
   Form,
   LabelContain,
@@ -7,9 +12,6 @@ import {
 } from 'components/ContactForm/ContactForm.styled';
 import { Button } from 'components/ContactListItem/ContactListItem.styled';
 import { Container } from 'components/Container';
-import { useDispatch } from 'react-redux';
-import { usePostRegisterUserMutation } from 'redux/contactsApi';
-import { newTokenUser } from 'redux/tokenSlice';
 
 const SingUpPage = () => {
   const dispatch = useDispatch();

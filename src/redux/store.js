@@ -10,7 +10,8 @@ import {
   REGISTER,
 } from 'redux-persist';
 
-import { contactsApi, registerApi } from './contactsApi';
+import { contactsApi } from './contactsApi';
+import { registerApi } from './authApi';
 
 export const store = configureStore({
   reducer,

@@ -1,7 +1,8 @@
 import { filterSlice } from './filterSlice';
 import { persistedThemeReduser } from './themeSlice';
-import { contactsApi, registerApi } from './contactsApi';
+import { contactsApi } from './contactsApi';
 import { persistedTokenReduser } from './tokenSlice';
+import { registerApi } from './authApi';
 
 export const reducer = {
   filter: filterSlice.reducer,

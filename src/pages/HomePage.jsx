@@ -1,7 +1,9 @@
+import { useDispatch } from 'react-redux';
+
+import { themeTogle } from 'redux/themeSlice';
+
 import { Button } from 'components/Button';
 import { Container } from 'components/Container';
-import { useDispatch } from 'react-redux';
-import { themeTogle } from 'redux/themeSlice';
 
 const HomePage = () => {
   const dispatch = useDispatch();

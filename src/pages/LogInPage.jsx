@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 
-import { usePostLoginUserMutation } from 'redux/contactsApi';
+import { usePostLoginUserMutation } from 'redux/authApi';
 import { newTokenUser } from 'redux/tokenSlice';
 
 import {

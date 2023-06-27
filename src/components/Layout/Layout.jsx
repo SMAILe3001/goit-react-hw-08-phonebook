@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink, Outlet } from 'react-router-dom';
+import { InfinitySpin } from 'react-loader-spinner';
 
 import UserMenu from 'components/UserMenu/UserMenu';
 import { tokenUser } from 'redux/tokenSlice';
@@ -8,7 +9,6 @@ import UserInfo from 'components/UserInfo/UserInfo';
 
 import { Container } from 'components/Container';
 import { Nav, Title } from './Layout.staled';
-import { InfinitySpin } from 'react-loader-spinner';
 
 const Leyout = () => {
   const authUser = useSelector(tokenUser);

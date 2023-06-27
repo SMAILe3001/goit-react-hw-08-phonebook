@@ -1,8 +1,9 @@
-import { Item, Button } from './ContactListItem.styled';
-import { useDeleteContactsMutation } from 'redux/contactsApi';
 import { Notify } from 'notiflix';
-
 import { ProgressBar } from 'react-loader-spinner';
+
+import { useDeleteContactsMutation } from 'redux/contactsApi';
+
+import { Item, Button } from './ContactListItem.styled';
 
 export function ContactListItem({ name, number, id }) {
   const [deleteContactServer, { isLoading: isLoadingDelet }] =
