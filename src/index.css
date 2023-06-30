@@ -15,7 +15,7 @@ code {
 }
 
 .active {
-  color: black;
+  border-top: 3px solid #f3b32a;
 }
 
 a {

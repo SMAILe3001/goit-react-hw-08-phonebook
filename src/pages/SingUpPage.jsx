@@ -12,6 +12,7 @@ import {
 } from 'components/ContactForm/ContactForm.styled';
 import { Button } from 'components/ContactListItem/ContactListItem.styled';
 import { Container } from 'components/Container';
+import { Notify } from 'notiflix';
 
 const SingUpPage = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,13 @@ const SingUpPage = () => {
 
   const registerUser = async formData => {
     const { data } = await create(formData);
+
+    if (!data) {
+      Notify.failure('A user with this email address exists');
+      return;
+    }
+
+    Notify.success(`Helow ${data.user.name}`);
     dispatch(newTokenUser(data.token));
   };
 

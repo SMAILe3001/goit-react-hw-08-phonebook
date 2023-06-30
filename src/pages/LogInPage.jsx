@@ -12,6 +12,7 @@ import {
 } from 'components/ContactForm/ContactForm.styled';
 import { Button } from 'components/ContactListItem/ContactListItem.styled';
 import { Container } from 'components/Container';
+import { Notify } from 'notiflix';
 
 const LogInPage = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,14 @@ const LogInPage = () => {
 
   const logInUser = async formData => {
     const { data } = await create(formData);
+
+    if (!data) {
+      Notify.failure('Incorrect login or password');
+      return;
+    }
+
+    Notify.success(`Helow ${data.user.name}`);
+
     dispatch(newTokenUser(data.token));
   };
 
