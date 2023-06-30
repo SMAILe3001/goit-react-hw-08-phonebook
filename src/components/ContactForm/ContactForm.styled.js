@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Form = styled.form`
+  margin-top: 12px;
   display: flex;
 `;
 

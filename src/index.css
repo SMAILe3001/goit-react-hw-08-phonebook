@@ -15,9 +15,13 @@ code {
 }
 
 .active {
-  border-top: 3px solid #f3b32a;
+  border-bottom: 3px solid #f3b32a;
 }
 
 a {
   text-decoration: none;
+}
+
+header {
+  border-bottom: 1px solid #ececec;
 }

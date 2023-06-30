@@ -8,7 +8,8 @@ import { tokenUser } from 'redux/tokenSlice';
 import UserInfo from 'components/UserInfo/UserInfo';
 
 import { Container } from 'components/Container';
-import { Nav, Title } from './Layout.staled';
+import { Div, Nav, Title } from './Layout.staled';
+import { TogleTheme } from 'components/TogleTheme/TogleTheme';
 
 const Leyout = () => {
   const authUser = useSelector(tokenUser);
@@ -17,15 +18,18 @@ const Leyout = () => {
     <>
       <header>
         <Container>
-          <Nav>
-            <NavLink to="/">
-              <Title>Home</Title>
-            </NavLink>
-            <NavLink to="/contacts">
-              <Title>Contacts</Title>
-            </NavLink>
+          <Div>
+            <Nav>
+              <NavLink to="/">
+                <Title>Home</Title>
+              </NavLink>
+              <NavLink to="/contacts">
+                <Title>Contacts</Title>
+              </NavLink>
+            </Nav>
+            <TogleTheme />
             {authUser ? <UserInfo /> : <UserMenu />}
-          </Nav>
+          </Div>
         </Container>
       </header>
       <main>
@@ -39,6 +43,11 @@ const Leyout = () => {
           <Outlet />
         </Suspense>
       </main>
+      <footer>
+        <Container>
+          <Title>Copyright © 2023.</Title>
+        </Container>
+      </footer>
     </>
   );
 };

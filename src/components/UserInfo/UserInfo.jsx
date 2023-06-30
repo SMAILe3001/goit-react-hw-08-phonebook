@@ -5,6 +5,7 @@ import { useGetAuthUserQuery, usePostLogOutMutation } from 'redux/authApi';
 
 import { Title } from 'components/Layout/Layout.staled';
 import { Button } from 'components/ContactListItem/ContactListItem.styled';
+import { Div } from './UserInfo.styled';
 
 const UserInfo = () => {
   const dispatch = useDispatch();
@@ -18,12 +19,12 @@ const UserInfo = () => {
   };
 
   return (
-    <>
+    <Div>
       <Title>{data?.name}</Title>
       <Button type="button" onClick={() => handelClick()}>
         Log Out
       </Button>
-    </>
+    </Div>
   );
 };
 
